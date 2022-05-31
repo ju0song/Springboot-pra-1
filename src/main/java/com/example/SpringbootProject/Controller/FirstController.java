@@ -4,8 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.security.PublicKey;
-
 //1.Controller 설정
 @Controller
 public class FirstController {
