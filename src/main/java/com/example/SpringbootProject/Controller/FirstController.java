@@ -1,8 +1,11 @@
 package com.example.SpringbootProject.Controller;
 
+import com.example.SpringbootProject.entity.Article;
+import com.example.SpringbootProject.repository.ArticleRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 //1.Controller 설정
 @Controller
@@ -19,4 +22,5 @@ public class FirstController {
         model.addAttribute("nickname","홍길동");
         return "goodbye";
     }
+
 }

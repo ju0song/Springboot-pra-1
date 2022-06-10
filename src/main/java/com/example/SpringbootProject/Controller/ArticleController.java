@@ -41,7 +41,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article);
 //        System.out.println(saved.toString());
         log.info(saved.toString());
-        //리다이렉트 적용
+        // 리다이렉트 적용
         return "redirect:/articles/" + saved.getId();
 
 
@@ -61,6 +61,7 @@ public class ArticleController {
         //3.보여줄 페이지를 설정!
         return "articles/show";
     }
+
     @GetMapping("/articles")
     public String index(Model model){
         //1.모든 아티클을 가져온다
@@ -69,6 +70,36 @@ public class ArticleController {
         // 2.가져온 Article 묶음을 뷰로 가져온다
         model.addAttribute("articleList",articleEntityList);
         return "articles/index";
+    }
+
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id,Model model){
+        //수정할 데이터를 가져오기!
+        Article articleEntity=articleRepository.findById(id).orElse(null);
+        //모델에 데이터를 등록!
+        model.addAttribute("article",articleEntity);
+        //  뷰페이지 설정
+        return "articles/edit";
+
+    }
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){
+        log.info(form.toString());
+
+        //1.dto를 엔티티로 변환한다
+        Article articleEntity =form.toEntity();
+        log.info(articleEntity.toString());
+
+        //2.엔티티를 DB로 저장한다
+        //2-1: DB에 기존데이터를 가져온다
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        //2-2:기존 데이터가있다면 값을 갱신한다.
+        if (target != null) {
+            articleRepository.save(articleEntity); //엔티티가 DB로 갱신된다
+        }
+
+       // 3.수정 결과 페이지로 리다이렉트 한다.
+        return "";
     }
 
 
